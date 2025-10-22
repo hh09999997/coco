@@ -4,9 +4,16 @@
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # 📂 المسار الأساسي للمشروع
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 🔐 تحميل متغيرات البيئة من ملف .env
+load_dotenv()
 
 # 🔐 مفتاح الأمان — ⚠️ غيّره في بيئة الإنتاج
 SECRET_KEY = 'django-insecure-تأكد-من-تغيير-هذا-المفتاح-في-الإنتاج'
@@ -26,6 +33,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # ☁️ تطبيقات Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 
     # 🌸 تطبيقات المشروع الداخلية
     'account.apps.AccountConfig',
@@ -85,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 8},  # الحد الأدنى للطول
+        'OPTIONS': {'min_length': 8},
     },
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
@@ -103,9 +114,7 @@ LANGUAGES = [
     ('ar', 'العربية'),
     ('en', 'English'),
 ]
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
-]
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # 🖼️ الملفات الثابتة (Static)
 STATIC_URL = '/static/'
@@ -117,6 +126,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # مجلد تجميع الملفات ع�
 # 📸 الملفات المرفوعة (Media)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# ☁️ إعداد Cloudinary
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+)
+
+# 🧩 تخزين الوسائط فقط على Cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # 💬 الإعداد الافتراضي لمعرّف الحقول
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

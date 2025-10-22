@@ -1,26 +1,29 @@
 from django.contrib import admin
-from .models import Category, Product
-from django.utils.translation import gettext_lazy as _
+from .models import Product, Category
+from django.utils.html import format_html
 
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
     search_fields = ('name',)
-    fieldsets = (
-        (_("معلومات الفئة"), {"fields": ("name", "description")}),
-    )
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'stock', 'created_at')
-    list_filter = ('category', 'created_at')
+    list_display = ('name', 'category', 'price', 'stock', 'show_image')
+    list_filter = ('category',)
     search_fields = ('name', 'description')
-    ordering = ('-created_at',)
+    readonly_fields = ('show_image',)
+
     fieldsets = (
-        (_("معلومات المنتج"), {"fields": ("name", "category", "description")}),
-        (_("التفاصيل المالية والمخزون"), {"fields": ("price", "stock")}),
-        (_("معلومات إضافية"), {"fields": ("created_at",)}),
+        ('📦 معلومات المنتج', {
+            'fields': ('name', 'category', 'description', 'price', 'stock', 'image', 'show_image')
+        }),
     )
-    readonly_fields = ('created_at',)
+
+    def show_image(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="80" height="80" style="border-radius: 8px;"/>', obj.image.url)
+        return "لا توجد صورة"
+    show_image.short_description = "صورة المنتج"
