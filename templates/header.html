@@ -33,6 +33,15 @@
       color: #ffe5ec;
     }
 
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions a {
+      text-decoration: none;
+    }
+
     .actions button {
       background-color: #fff;
       color: #f9748f;
@@ -53,13 +62,19 @@
   <div class="logo">👗 Coco Fashion</div>
 
   <nav>
-    <a href="#">الرئيسية</a>
+    <a href="/">الرئيسية</a>
     <a href="#">المنتجات</a>
     <a href="#">العروض</a>
     <a href="#">اتصل بنا</a>
   </nav>
 
   <div class="actions">
-    <button>تسجيل الدخول</button>
+    <!-- 🔑 أزرار الدخول والتسجيل -->
+    <a href="{% url 'account:login' %}">
+      <button>تسجيل الدخول</button>
+    </a>
+    <a href="{% url 'account:register' %}">
+      <button>إنشاء حساب</button>
+    </a>
   </div>
 </header>
