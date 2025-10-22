@@ -1,0 +1,121 @@
+{% include 'header.html' %}
+
+<!-- ================= HOME PAGE ================= -->
+<main>
+  <style>
+    body {
+      margin: 0;
+      background-color: #fff8fa;
+      font-family: "Cairo", sans-serif;
+      color: #333;
+    }
+
+    main {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #ffe0ec, #fff0f5);
+      padding: 80px 20px;
+      border-radius: 25px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 50px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      color: #f9748f;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 0 40px;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .product img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      color: #f9748f;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .product p {
+      color: #555;
+      margin: 0;
+    }
+
+    .product button {
+      margin-top: 10px;
+      background-color: #f9748f;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .product button:hover {
+      background-color: #fd868c;
+    }
+  </style>
+
+  <section class="hero">
+    <h1>اكتشف تشكيلتنا من الملابس الأنيقة ✨</h1>
+    <p>أزياء عصرية بألوان زاهية تناسب جميع الأذواق 💃</p>
+  </section>
+
+  <section class="products">
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f" alt="فستان أنيق">
+      <h3>فستان زهري</h3>
+      <p>السعر: 180 ر.س</p>
+      <button>أضف إلى السلة</button>
+    </div>
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f" alt="بدلة نسائية">
+      <h3>بدلة أنيقة</h3>
+      <p>السعر: 250 ر.س</p>
+      <button>أضف إلى السلة</button>
+    </div>
+
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" alt="جاكيت شبابي">
+      <h3>جاكيت شبابي</h3>
+      <p>السعر: 200 ر.س</p>
+      <button>أضف إلى السلة</button>
+    </div>
+  </section>
+</main>
+
+{% include 'footer.html' %}
