@@ -10,6 +10,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = _("فئة")
         verbose_name_plural = _("الفئات")
+        ordering = ["name"]  # ✅ ترتيب الفئات أبجديًا لسهولة الإدارة
 
     def __str__(self):
         return self.name
@@ -28,7 +29,7 @@ class Product(models.Model):
     price = models.DecimalField(_("السعر"), max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(_("المخزون"), default=0)
     
-    # ✅ رفع الصورة على Cloudinary بدل MEDIA
+    # ✅ رفع الصورة مباشرة إلى Cloudinary
     image = CloudinaryField(_("صورة المنتج"), folder="products/", blank=True, null=True)
     
     created_at = models.DateTimeField(_("تاريخ الإضافة"), auto_now_add=True)
@@ -36,6 +37,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = _("منتج")
         verbose_name_plural = _("المنتجات")
+        ordering = ["-created_at"]  # ✅ الأحدث يظهر أولًا
 
     def __str__(self):
         return self.name
