@@ -5,25 +5,35 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
 import cloudinary
 
+# =====================================================
 # 📂 المسار الأساسي للمشروع
+# =====================================================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =====================================================
 # 🔐 تحميل متغيرات البيئة من ملف .env
+# =====================================================
 load_dotenv(BASE_DIR / ".env")
 
-# 🔐 مفتاح الأمان — ⚠️ غيّره في بيئة الإنتاج
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-تأكد-من-تغيير-هذا-المفتاح-في-الإنتاج")
+# =====================================================
+# 🔧 إعدادات عامة
+# =====================================================
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-تأكد-من-تغييره-في-الإنتاج")
 
-# ⚙️ وضع التطوير (فعّله محليًا فقط)
-DEBUG = os.getenv("DEBUG", "True") == "True"
+# ⚙️ وضع التشغيل: True = تطوير / False = إنتاج
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
-# 🌐 أسماء النطاقات المسموح بها
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+# 🌍 المضيفون المسموح بهم
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
+# 🌐 نوع البيئة
+ENV = os.getenv("ENV", "development").lower()
+
+# =====================================================
 # 🧩 التطبيقات المثبتة
+# =====================================================
 INSTALLED_APPS = [
     # 🧱 تطبيقات Django الافتراضية
     'django.contrib.admin',
@@ -33,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # ☁️ Cloudinary
+    # ☁️ Cloudinary للتخزين السحابي
     'cloudinary',
     'cloudinary_storage',
 
@@ -43,7 +53,9 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
 ]
 
-# ⚙️ البرمجيات الوسيطة
+# =====================================================
+# ⚙️ البرمجيات الوسيطة (Middleware)
+# =====================================================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,14 +67,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# =====================================================
 # 🧭 ملف التوجيهات
+# =====================================================
 ROOT_URLCONF = 'coco.urls'
 
-# 🎨 إعداد القوالب
+# =====================================================
+# 🎨 إعدادات القوالب (Templates)
+# =====================================================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # 📁 مجلد القوالب الرئيسي
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,11 +91,15 @@ TEMPLATES = [
     },
 ]
 
+# =====================================================
 # ⚙️ واجهة WSGI
+# =====================================================
 WSGI_APPLICATION = 'coco.wsgi.application'
 
-# 🗄️ قاعدة البيانات — تطوير محلي + إنتاج Render
-if os.getenv("ENV") == "production":
+# =====================================================
+# 🗄️ قاعدة البيانات (محلية + إنتاج)
+# =====================================================
+if ENV == "production":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -87,7 +107,7 @@ if os.getenv("ENV") == "production":
             'USER': os.getenv("DB_USER"),
             'PASSWORD': os.getenv("DB_PASSWORD"),
             'HOST': os.getenv("DB_HOST"),
-            'PORT': os.getenv("DB_PORT"),
+            'PORT': os.getenv("DB_PORT", "5432"),
         }
     }
 else:
@@ -98,10 +118,14 @@ else:
         }
     }
 
+# =====================================================
 # 👤 نموذج المستخدم المخصص
+# =====================================================
 AUTH_USER_MODEL = 'account.User'
 
+# =====================================================
 # 🔐 إعدادات كلمات المرور
+# =====================================================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 8}},
@@ -109,32 +133,46 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# =====================================================
 # 🌍 اللغة والمنطقة الزمنية
+# =====================================================
 LANGUAGE_CODE = 'ar'
 TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_TZ = True
 
-# 🌐 تعدد اللغات
-LANGUAGES = [('ar', 'العربية'), ('en', 'English')]
+# 🌐 اللغات المدعومة
+LANGUAGES = [
+    ('ar', 'العربية'),
+    ('en', 'English'),
+]
 LOCALE_PATHS = [BASE_DIR / 'locale']
 
-# 🖼️ الملفات الثابتة
+# =====================================================
+# 🖼️ الملفات الثابتة والميديا
+# =====================================================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # 📦 مجلد التجميع للإنتاج
 
-# 📸 ملفات الوسائط
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# =====================================================
 # ☁️ إعدادات Cloudinary
+# =====================================================
 cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
 )
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# 💬 المعرف الافتراضي
+# =====================================================
+# 💬 إعدادات عامة إضافية
+# =====================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ✅ معلومات لسهولة التتبع في لوحة التحكم
+print(f"🚀 البيئة الحالية: {ENV.upper()} | قاعدة البيانات: {DATABASES['default']['ENGINE']}")
