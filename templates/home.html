@@ -1,121 +1,213 @@
-{% include 'header.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 متجر كوكو للألعاب</title>
+    <style>
+        /* ✨ إعدادات عامة */
+        body {
+            font-family: "Cairo", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #fefefe, #f3f6ff);
+            color: #333;
+            text-align: center;
+        }
 
-<!-- ================= HOME PAGE ================= -->
-<main>
-  <style>
-    body {
-      margin: 0;
-      background-color: #fff8fa;
-      font-family: "Cairo", sans-serif;
-      color: #333;
-    }
+        header {
+            background: #4f46e5;
+            color: white;
+            padding: 1.2rem 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
 
-    main {
-      text-align: center;
-      padding: 60px 20px;
-    }
+        header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
 
-    .hero {
-      background: linear-gradient(135deg, #ffe0ec, #fff0f5);
-      padding: 80px 20px;
-      border-radius: 25px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-      margin-bottom: 50px;
-    }
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 10px;
+        }
 
-    .hero h1 {
-      font-size: 38px;
-      color: #f9748f;
-      margin-bottom: 15px;
-    }
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            background: #6366f1;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
 
-    .hero p {
-      font-size: 18px;
-      color: #555;
-    }
+        nav a:hover {
+            background: #4338ca;
+        }
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-      padding: 0 40px;
-    }
+        /* 🎮 قسم البطل (Hero) */
+        .hero {
+            padding: 3rem 1rem;
+            background: url("{% static 'images/hero-bg.jpg' %}") no-repeat center/cover;
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
 
-    .product {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 15px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+        .hero h2 {
+            font-size: 2rem;
+        }
 
-    .product:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-    }
+        .hero p {
+            font-size: 1.2rem;
+            margin: 1rem auto;
+            max-width: 600px;
+        }
 
-    .product img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 15px;
-      margin-bottom: 10px;
-    }
+        .hero button {
+            background: #facc15;
+            color: #333;
+            font-weight: bold;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    .product h3 {
-      color: #f9748f;
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
+        .hero button:hover {
+            background: #fde047;
+        }
 
-    .product p {
-      color: #555;
-      margin: 0;
-    }
+        /* 🧸 منتجات */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
 
-    .product button {
-      margin-top: 10px;
-      background-color: #f9748f;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
 
-    .product button:hover {
-      background-color: #fd868c;
-    }
-  </style>
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
 
-  <section class="hero">
-    <h1>اكتشف تشكيلتنا من الملابس الأنيقة ✨</h1>
-    <p>أزياء عصرية بألوان زاهية تناسب جميع الأذواق 💃</p>
-  </section>
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
 
-  <section class="products">
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f" alt="فستان أنيق">
-      <h3>فستان زهري</h3>
-      <p>السعر: 180 ر.س</p>
-      <button>أضف إلى السلة</button>
-    </div>
+        .product-card h3 {
+            margin: 0.8rem 0 0.3rem;
+        }
 
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f" alt="بدلة نسائية">
-      <h3>بدلة أنيقة</h3>
-      <p>السعر: 250 ر.س</p>
-      <button>أضف إلى السلة</button>
-    </div>
+        .product-card p {
+            margin: 0;
+            color: #777;
+        }
 
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" alt="جاكيت شبابي">
-      <h3>جاكيت شبابي</h3>
-      <p>السعر: 200 ر.س</p>
-      <button>أضف إلى السلة</button>
-    </div>
-  </section>
-</main>
+        .product-card button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-{% include 'footer.html' %}
+        .product-card button:hover {
+            background: #4338ca;
+        }
+
+        /* 📱 تحسين العرض على الجوال */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            nav a {
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+
+        footer {
+            background: #111827;
+            color: #9ca3af;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #facc15;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎮 متجر كوكو للألعاب</h1>
+        <nav>
+            <a href="#">الرئيسية</a>
+            <a href="#">المنتجات</a>
+            <a href="#">عروضنا</a>
+            <a href="#">تواصل معنا</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>ألعاب ممتعة لكل الأعمار 👾</h2>
+        <p>استكشف مجموعتنا الكبيرة من الألعاب المميزة، وشحن سريع لجميع مناطق المملكة 🚚💨</p>
+        <button>تسوق الآن</button>
+    </section>
+
+    <section class="products">
+        <div class="product-card">
+            <img src="{% static 'images/toy1.jpg' %}" alt="لعبة 1">
+            <h3>لعبة الأطفال الذكية</h3>
+            <p>ابتكار وتعليم في نفس الوقت</p>
+            <button>عرض التفاصيل</button>
+        </div>
+
+        <div class="product-card">
+            <img src="{% static 'images/toy2.jpg' %}" alt="لعبة 2">
+            <h3>سيارة التحكم عن بعد 🚗</h3>
+            <p>متعة وسرعة لا مثيل لها</p>
+            <button>عرض التفاصيل</button>
+        </div>
+
+        <div class="product-card">
+            <img src="{% static 'images/toy3.jpg' %}" alt="لعبة 3">
+            <h3>دمية الأطفال اللطيفة 🧸</h3>
+            <p>الهدية المثالية لطفلك</p>
+            <button>عرض التفاصيل</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 جميع الحقوق محفوظة لمتجر <strong>كوكو للألعاب</strong></p>
+        <p>تابعنا على <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+    </footer>
+
+</body>
+</html>
