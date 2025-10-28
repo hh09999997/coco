@@ -28,6 +28,10 @@ DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 # 🌍 المضيفون المسموح بهم
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
+# 🔄 السماح التلقائي بنطاقات Render (يضيف أي نطاق .onrender.com تلقائيًا)
+if "onrender.com" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(".onrender.com")
+
 # 🌐 نوع البيئة
 ENV = os.getenv("ENV", "development").lower()
 
@@ -174,5 +178,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # =====================================================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ معلومات لسهولة التتبع في لوحة التحكم
+# ✅ طباعة للتأكيد
 print(f"🚀 البيئة الحالية: {ENV.upper()} | قاعدة البيانات: {DATABASES['default']['ENGINE']}")
+print(f"🌍 ALLOWED_HOSTS: {ALLOWED_HOSTS}")
