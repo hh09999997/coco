@@ -4,28 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 متجر كوكو للألعاب</title>
+    <title>🕴️ متجر كوكو للملابس الرجالية</title>
     <style>
-        /* ✨ إعدادات عامة */
+        /* إعدادات عامة */
         body {
             font-family: "Cairo", sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #fefefe, #f3f6ff);
+            background-color: #f9fafb;
             color: #333;
-            text-align: center;
         }
 
         header {
-            background: #4f46e5;
+            background-color: #1f2937;
             color: white;
-            padding: 1.2rem 0;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
-            font-size: 1.8rem;
             margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
         }
 
         nav {
@@ -33,68 +34,84 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 1rem;
-            margin-top: 10px;
+            margin-top: 0.5rem;
         }
 
         nav a {
+            color: #facc15;
             text-decoration: none;
-            color: #fff;
-            background: #6366f1;
-            padding: 10px 20px;
+            padding: 8px 18px;
+            border: 1px solid #facc15;
             border-radius: 25px;
             transition: all 0.3s ease;
         }
 
         nav a:hover {
-            background: #4338ca;
+            background-color: #facc15;
+            color: #1f2937;
         }
 
-        /* 🎮 قسم البطل (Hero) */
+        /* قسم البطل (Hero) */
         .hero {
-            padding: 3rem 1rem;
-            background: url("{% static 'images/hero-bg.jpg' %}") no-repeat center/cover;
+            background: url("{% static 'images/mens-fashion.jpg' %}") no-repeat center/cover;
+            text-align: center;
             color: white;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            padding: 5rem 1rem;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            margin: 1rem auto;
-            max-width: 600px;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
         }
 
         .hero button {
-            background: #facc15;
-            color: #333;
-            font-weight: bold;
+            background-color: #facc15;
+            color: #1f2937;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 28px;
+            font-size: 1rem;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .hero button:hover {
-            background: #fde047;
+            background-color: #fde047;
         }
 
-        /* 🧸 منتجات */
+        /* المنتجات */
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 1.5rem;
             padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
         }
 
         .product-card {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
             overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease;
         }
 
@@ -104,54 +121,40 @@
 
         .product-card img {
             width: 100%;
-            height: 180px;
+            height: 250px;
             object-fit: cover;
         }
 
         .product-card h3 {
             margin: 0.8rem 0 0.3rem;
+            color: #111827;
         }
 
         .product-card p {
             margin: 0;
-            color: #777;
+            color: #6b7280;
         }
 
         .product-card button {
-            background: #4f46e5;
-            color: white;
+            background: #1f2937;
+            color: #fff;
             border: none;
             padding: 10px 15px;
             border-radius: 8px;
-            margin: 10px 0;
+            margin: 10px 0 15px;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .product-card button:hover {
-            background: #4338ca;
-        }
-
-        /* 📱 تحسين العرض على الجوال */
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 1.4rem;
-            }
-            .hero h2 {
-                font-size: 1.6rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            nav a {
-                padding: 8px 14px;
-                font-size: 0.9rem;
-            }
-        }
-
-        footer {
             background: #111827;
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: #1f2937;
             color: #9ca3af;
+            text-align: center;
             padding: 1.5rem 0;
             margin-top: 3rem;
             font-size: 0.9rem;
@@ -161,51 +164,65 @@
             color: #facc15;
             text-decoration: none;
         }
+
+        /* تحسين العرض للجوال */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .hero h2 { font-size: 1.6rem; }
+            .hero p { font-size: 1rem; }
+            nav a { padding: 6px 14px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- ✅ الشريط العلوي -->
     <header>
-        <h1>🎮 متجر كوكو للألعاب</h1>
+        <h1>🕴️ متجر كوكو للملابس الرجالية</h1>
         <nav>
             <a href="#">الرئيسية</a>
-            <a href="#">المنتجات</a>
-            <a href="#">عروضنا</a>
+            <a href="#">الأقسام</a>
+            <a href="#">العروض</a>
             <a href="#">تواصل معنا</a>
         </nav>
     </header>
 
+    <!-- ✅ قسم البطل -->
     <section class="hero">
-        <h2>ألعاب ممتعة لكل الأعمار 👾</h2>
-        <p>استكشف مجموعتنا الكبيرة من الألعاب المميزة، وشحن سريع لجميع مناطق المملكة 🚚💨</p>
-        <button>تسوق الآن</button>
+        <div class="hero-content">
+            <h2>الأناقة تبدأ من كوكو 👔</h2>
+            <p>تسوق أحدث تشكيلات الملابس الرجالية — جودة فاخرة وتصاميم عصرية ✨</p>
+            <button>تسوق الآن</button>
+        </div>
     </section>
 
+    <!-- ✅ المنتجات -->
     <section class="products">
         <div class="product-card">
-            <img src="{% static 'images/toy1.jpg' %}" alt="لعبة 1">
-            <h3>لعبة الأطفال الذكية</h3>
-            <p>ابتكار وتعليم في نفس الوقت</p>
+            <img src="{% static 'images/shirt1.jpg' %}" alt="قميص رسمي">
+            <h3>قميص رسمي أنيق</h3>
+            <p>خامة قطنية فاخرة</p>
             <button>عرض التفاصيل</button>
         </div>
 
         <div class="product-card">
-            <img src="{% static 'images/toy2.jpg' %}" alt="لعبة 2">
-            <h3>سيارة التحكم عن بعد 🚗</h3>
-            <p>متعة وسرعة لا مثيل لها</p>
+            <img src="{% static 'images/pants1.jpg' %}" alt="بنطال">
+            <h3>بنطال رجالي كلاسيكي</h3>
+            <p>راحة وأناقة طوال اليوم</p>
             <button>عرض التفاصيل</button>
         </div>
 
         <div class="product-card">
-            <img src="{% static 'images/toy3.jpg' %}" alt="لعبة 3">
-            <h3>دمية الأطفال اللطيفة 🧸</h3>
-            <p>الهدية المثالية لطفلك</p>
+            <img src="{% static 'images/jacket1.jpg' %}" alt="جاكيت">
+            <h3>جاكيت شتوي فاخر</h3>
+            <p>تصميم عصري وخامة دافئة</p>
             <button>عرض التفاصيل</button>
         </div>
     </section>
 
+    <!-- ✅ التذييل -->
     <footer>
-        <p>© 2025 جميع الحقوق محفوظة لمتجر <strong>كوكو للألعاب</strong></p>
+        <p>© 2025 جميع الحقوق محفوظة لمتجر <strong>كوكو للملابس</strong></p>
         <p>تابعنا على <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
     </footer>
 
